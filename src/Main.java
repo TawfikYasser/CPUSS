@@ -3,11 +3,15 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Welcome to the CPU Scheduler Simulator (OS)");
-        System.out.println("[1] SJF");  //Shortest Job First
-        System.out.println("[2] RR");   //Round Robin
-        System.out.println("[3] PS");   //PriorityScheduling
-        System.out.println("[4] MLQ");  //Multi-Level-Queue-Scheduling
+        System.out.print("\n");
+        System.out.println("Welcome to the CPU Scheduler Simulator >>>>> (OS)");
+        System.out.println("-------------------------------------------------");
+        System.out.println("Choose one of the following scheduling algorithms");
+        System.out.println("[1] Shortest Job First [SJF]");  //Shortest Job First
+        System.out.println("[2] Round Robin [RR]");          //Round Robin
+        System.out.println("[3] Priority Scheduling");       //PriorityScheduling
+        System.out.println("[4] Multi-Level Queue [MLQ]");   //Multi-Level-Queue-Scheduling
+        System.out.print(">> ");
         Scanner scanner = new Scanner(System.in);
         int choise = scanner.nextInt();
         switch (choise){
@@ -52,12 +56,8 @@ public class Main {
             process process = new process(name, burst, arrival, qNumber);
             processes[i] = process;
         }
-
         System.out.println("Enter the quantum time: ");
         quantum = scanner.nextInt();
-
-
-
         MultiLevelQueueScheduling multiLevelQueueScheduling = new MultiLevelQueueScheduling();
         multiLevelQueueScheduling.MLQ(number,processes,quantum);
 
@@ -125,7 +125,7 @@ public class Main {
         }
         ArrayList<process> processesCpy = processesCpyClone;
 
-        ArrayList<GanttChart> gantt = new PreemptivePrioritySchedulingAlgorithm().getGantt(processes);
+        ArrayList<GanttChart> gantt = new PreemptivePrioritySchedulingAlgorithm().getGantt(processes); // Starting execution of processes
 
         System.out.println("Completion Time"); //The following function prints the completion time for each entered process
         for (process p : processesCpy) {
@@ -161,32 +161,33 @@ public class Main {
     public static void SJFAlgorithm() {
         /**Here is algorithm number 1*/
         process p1;
-        int num, burset_time, arrive_time, con;
+        int num,burset_time,arrive_time,con;
         String name;
-        Scanner sc = new Scanner(System.in);
+        Scanner sc=new Scanner(System.in);
         System.out.println("enter number of process");
-        num = sc.nextInt();
-        preemptive_SJF pf1 = new preemptive_SJF();
-        for (int i = 0; i < num; i++) {
+        num=sc.nextInt();
+        Preemptive_SJF pf1 = new Preemptive_SJF();
+        for (int i=0;i<num;i++)
+        {
             System.out.println("enter burset_time of process");
-            burset_time = sc.nextInt();
+            burset_time=sc.nextInt();
 
             System.out.println("enter arrive_time of process");
-            arrive_time = sc.nextInt();
+            arrive_time=sc.nextInt();
 
             System.out.println("enter name of process");
-            name = sc.nextLine();
-            name = sc.nextLine();
+            name=sc.nextLine();
+            name=sc.nextLine();
 
-            p1 = new process(name, burset_time, arrive_time);
+            p1=new process(name,burset_time,arrive_time);
 
             pf1.processes.add(p1);
         }
         System.out.println("enter context switching");
-        con = sc.nextInt();
+        con=sc.nextInt();
         pf1.setContext_switching(con);
-        int y = pf1.zeronum();
-        if (y == pf1.processes.size())
+        int y=pf1.zeronum();
+        if (y==pf1.processes.size())
             pf1.zero_sjf();
         else
             pf1.SJF();
@@ -197,32 +198,33 @@ public class Main {
     public static void RRAlgorithm() {
         /**Here is algorithm number 2*/
 
-        RoundRobin r1 = new RoundRobin();
-        int number, quantam, burset_time, arrive_time, con;
-        Scanner input = new Scanner(System.in);
+        RoundRobin r1=new RoundRobin();
+        int number,quantam,burset_time,arrive_time,con;
+        Scanner input=new Scanner(System.in);
         System.out.println("enter number of process");
-        number = input.nextInt();
+        number=input.nextInt();
         process p2;
         String name;
-        for (int i = 0; i < number; i++) {
+        for (int i=0;i<number;i++)
+        {
             System.out.println("enter burset_time of process");
-            burset_time = input.nextInt();
+            burset_time=input.nextInt();
 
             System.out.println("enter arrive_time of process");
-            arrive_time = input.nextInt();
+            arrive_time=input.nextInt();
 
             System.out.println("enter name of process");
-            name = input.nextLine();
-            name = input.nextLine();
+            name=input.nextLine();
+            name=input.nextLine();
 
-            p2 = new process(name, burset_time, arrive_time);
+            p2=new process(name,burset_time,arrive_time);
 
             r1.round_processes.add(p2);
         }
         System.out.println("enter quantam time");
-        quantam = input.nextInt();
+        quantam=input.nextInt();
         System.out.println("enter context switching");
-        con = input.nextInt();
+        con=input.nextInt();
         r1.setContext_switching(con);
 
         r1.setQuantum_time(quantam);

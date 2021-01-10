@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class preemptive_SJF {
+public class Preemptive_SJF {
     public  ArrayList <process> processes=new ArrayList<>();
     int totaltime=0;
     int context_switching=0;
@@ -286,7 +286,7 @@ public class preemptive_SJF {
         double av=0;
 
         for (int i = 0; i < processes.size(); i++) {
-            av+=processes.get(i).getTurn_round_time()-processes.get(i).getArrive_time()-processes.get(i).getTemp_burset_time();
+            av+=processes.get(i).getTurn_round_time()-processes.get(i).getTemp_burset_time();
         }
         return (av/processes.size());
     }
@@ -305,7 +305,7 @@ public class preemptive_SJF {
             System.out.print("Burset time: "+processes.get(i).getTemp_burset_time()+"  ");
             System.out.print("process name: "+processes.get(i).getName()+"  ");
             System.out.print("turn round time: "+processes.get(i).getTurn_round_time()+" ");
-            System.out.print("waiting time: "+(processes.get(i).getTurn_round_time()-processes.get(i).getArrive_time()-processes.get(i).getTemp_burset_time())+"\n");
+            System.out.print("waiting time: "+(processes.get(i).getTurn_round_time()-processes.get(i).getTemp_burset_time())+"\n");
 
         }
         System.out.println("average waiting time : "+calculate_average_waiting());

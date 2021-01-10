@@ -33,7 +33,7 @@ public class RoundRobin {
             if (round_processes.get(i).getBurset_time()!=0)
             {
 
-                if (round_processes.get(i).getBurset_time()>Quantum_time)
+                if (round_processes.get(i).getBurset_time()>=Quantum_time)
                 {
                     System.out.println("process :"+round_processes.get(i).getName()+"is running");
                     total_time+=Quantum_time;
@@ -48,8 +48,8 @@ public class RoundRobin {
                         i++;
                     }
                     else {
-                       System.out.println("process :"+round_processes.get(i).getName()+"is waiting");
-                       i++;}
+                        System.out.println("process :"+round_processes.get(i).getName()+"is waiting");
+                        i++;}
                     total_time+=context_switching;
 
                 }
@@ -72,15 +72,15 @@ public class RoundRobin {
         }
     }
     public double calculate_average_waiting() {
-        int av=0;
+        double av=0;
 
         for (int i = 0; i < round_processes.size(); i++) {
-            av+=round_processes.get(i).getTurn_round_time()-round_processes.get(i).getArrive_time()-round_processes.get(i).getTemp_burset_time();
+            av+=round_processes.get(i).getTurn_round_time()-round_processes.get(i).getTemp_burset_time();
         }
         return (av/round_processes.size());
     }
     public double calculate_average_turnround() {
-        int av=0;
+        double av=0;
 
         for (int i = 0; i < round_processes.size(); i++) {
             av+=round_processes.get(i).getTurn_round_time();
@@ -93,7 +93,7 @@ public class RoundRobin {
         {
             System.out.print("Name: "+round_processes.get(i).getName()+" ");
             System.out.println("turn round time: "+round_processes.get(i).getTurn_round_time());
-            System.out.print("waiting time: "+(round_processes.get(i).getTurn_round_time()-round_processes.get(i).getArrive_time()-round_processes.get(i).getTemp_burset_time())+"\n");
+            System.out.print("waiting time: "+(round_processes.get(i).getTurn_round_time()-round_processes.get(i).getTemp_burset_time())+"\n");
         }
         System.out.println("average waiting time : "+calculate_average_waiting());
         System.out.println("average turn_round_time : "+calculate_average_turnround());

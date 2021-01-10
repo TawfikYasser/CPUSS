@@ -41,7 +41,7 @@ public class PreemptivePrioritySchedulingAlgorithm {
         while (!readyQueue.isEmpty()) {
             //Get each ready process from the ready queue and work on it.
             process process = readyQueue.dequeue();
-
+            System.out.println("Process P"+process.getProcessID()+" Running.");
 
             //The following condition to check if there are processes need to work.
             if (orderedByArrivingTime.size() > 0) {
@@ -74,7 +74,8 @@ public class PreemptivePrioritySchedulingAlgorithm {
                         currentTime = p.getArrive_time();
                         process.reduceTime(currentTime - in);
                         out = currentTime;
-                        readyQueue.enqueue(process);
+                        readyQueue.enqueue(process);//Put the first process again with new burst time
+                        System.out.println("Process P"+process.getProcessID()+" Blocked Temporary at Time: "+currentTime);
                         GanttChart gR = new GanttChart(in, out, process.getProcessID());
                         gantt.add(gR);
                         readyQueue.enqueue(p);
@@ -90,7 +91,7 @@ public class PreemptivePrioritySchedulingAlgorithm {
                         currentTime += process.getBurset_time();
                         out = currentTime;
                         gantt.add(new GanttChart(in, out, process.getProcessID()));
-
+                        System.out.println("Process P"+process.getProcessID()+" Finished Work at Time: "+currentTime);
                         //So if now process from the ordered array have greater priority then will have to check if now
                         //processes in the ready queue so we have to add one of the processes from the ordered array to the
                         //ready queue to work.
@@ -107,6 +108,7 @@ public class PreemptivePrioritySchedulingAlgorithm {
                 in = currentTime;
                 currentTime += process.getBurset_time();
                 out = currentTime;
+                System.out.println("Process P"+process.getProcessID()+" Finished Work at Time: "+currentTime);
                 gantt.add(new GanttChart(in, out, process.getProcessID()));
             }
         }
