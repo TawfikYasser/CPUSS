@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -102,23 +103,7 @@ public class preemptive_SJF {
         }
         return null;
     }
-    private  process find_arrive_min (int index)
-    {
-        if (index==0)
-            return null ;
-        process p1=processes.get(0);
-        for (int i=0;i<index;i++)
-        {
-            if (processes.get(i).getBurset_time()<p1.getBurset_time()&& p1.burset_time!=0 && processes.get(i).getBurset_time()!=0 )
-                p1=processes.get(i);
-        }
-        for (int i=0;i<processes.size();i++)
-        {
-            if (processes.get(i).getBurset_time()<p1.getBurset_time()&& p1.burset_time!=0 && processes.get(i).getBurset_time()!=0 )
-                p1=processes.get(i);
-        }
-        return p1;
-    }
+
     private  process find_process_arrive (process p1)
     {
         process p2;
@@ -137,7 +122,7 @@ public class preemptive_SJF {
         }
 
         if (pop.size()==0)
-          return null;
+            return null;
         p2=pop.get(0);
         for (int i=1;i<pop.size();i++)
         {
@@ -155,7 +140,7 @@ public class preemptive_SJF {
         temp=p1.getBurset_time();
         p1.setBurset_time(--temp);
         totaltime++;
-        System.out.println("Process "+p1.getName()+" is running");
+        System.out.println("1-Process "+p1.getName()+" is running");
         for (int i=1;i<=time;i++)
         {
             p2=find_arrive(i);
@@ -163,7 +148,7 @@ public class preemptive_SJF {
                 temp=p1.getBurset_time();
                 p1.setBurset_time(--temp);
                 totaltime++;
-                System.out.println("Process "+p1.getName()+" is running");
+                System.out.println("2-Process "+p1.getName()+" is running");
                 continue;
             }
             else
@@ -173,16 +158,16 @@ public class preemptive_SJF {
                     temp=p1.getBurset_time();
                     p1.setBurset_time(--temp);
                     totaltime++;
-                    System.out.println("Process "+p1.getName()+"is running");
+                    System.out.println("3-Process "+p1.getName()+"is running");
                     continue;
                 }
                 else if (  p2!=null &&p1.getBurset_time()>p2.getBurset_time())
                 {
-                    System.out.println("Process "+p1.getName()+"is waiting");
+                    System.out.println("4-Process "+p1.getName()+"is waiting");
                     p1=p2;
                     temp=p1.getBurset_time();
                     p1.setBurset_time(--temp);
-                    System.out.println("Process "+p2.getName()+"is running");
+                    System.out.println("5-Process "+p2.getName()+"is running");
                     totaltime+=context_switching;
                     totaltime++;
                 }
@@ -193,7 +178,7 @@ public class preemptive_SJF {
                     {
                         int e=processes.indexOf(p1);
                         processes.get(e).setTurn_round_time(totaltime);
-                        System.out.println("Process "+p1.getName()+"is terminated");
+                        System.out.println("6-Process "+p1.getName()+"is terminated");
                         if (p1==processes.get(processes.size()-1))
                         {
                             SJF_continue(p1);
@@ -203,10 +188,11 @@ public class preemptive_SJF {
                         {
                             if (p2==null)
                             {
-                            int f=processes.indexOf(p1);
-                            process k1,k2;
-                            k1=find_process_arrive(p1);
-                            k2=find_arrive_min(f);//in case no process exist before it//
+                                int f=processes.indexOf(p1);
+                                int y=processes.get(f).getArrive_time();
+                                process k1,k2;
+                                k1=find_process_arrive(p1);
+                                k2=find_min(y);//in case no process exist before it//
                                 if (k1==null && k2==null)
                                 {
                                     p1=find_min(i);
@@ -220,79 +206,84 @@ public class preemptive_SJF {
                                 else
                                     p1=k2;
 
-                            if (p1.getBurset_time()==0)
-                            {
-                                p1=find_arrive(i);
-                                i++;
-                                totaltime++;
-                                while (p1!=null)
+                                if (p1.getBurset_time()==0)
                                 {
                                     p1=find_arrive(i);
                                     i++;
                                     totaltime++;
+                                    while (p1!=null)
+                                    {
+                                        p1=find_arrive(i);
+                                        i++;
+                                        totaltime++;
+                                    }
+                                    temp=p1.getBurset_time();
+                                    p1.setBurset_time(--temp);
+                                    totaltime+=context_switching;
+                                    totaltime++;
+                                    System.out.println("7-Process "+p1.getName()+" is running");
                                 }
-                                temp=p1.getBurset_time();
-                                p1.setBurset_time(--temp);
-                                totaltime+=context_switching;
-                                totaltime++;
-                                System.out.println("Process "+p1.getName()+" is running");
-                            }
-                            else{
-                            temp=p1.getBurset_time();
-                            p1.setBurset_time(--temp);
-                            System.out.println("Process "+p1.getName()+"is running");
-                            totaltime+=context_switching;
-                            totaltime++;
-                            }
+                                else{
+                                    temp=p1.getBurset_time();
+                                    p1.setBurset_time(--temp);
+                                    System.out.println("8-Process "+p1.getName()+"is running");
+                                    totaltime+=context_switching;
+                                    totaltime++;
+                                }
                             }
                             else
                             {
                                 int f=processes.indexOf(p2);
-                                p1=find_arrive_min(f);
+                                int y=processes.get(f).getArrive_time();
+                                p1=find_min(y);
                                 temp=p1.getBurset_time();
                                 p1.setBurset_time(--temp);
-                                System.out.println("Process "+p1.getName()+"is running");
+                                System.out.println("9-Process "+p1.getName()+"is running");
                                 totaltime+=context_switching;
                                 totaltime++;
                             }
 
-                            }
                         }
                     }
                 }
+            }
             if (p2==processes.get(processes.size()-1))
                 break;
-            }
-        SJF_continue (p1);
         }
+        SJF_continue (p1);
+    }
 
     public  void  SJF_continue (process p1)
     {
         int y= processes.indexOf(p1),remain;
         remain=p1.getBurset_time();
 
+        for (int i=0;i<remain;i++)
+            System.out.println("10-Process "+p1.getName()+" is running");
 
         totaltime+=remain;
         processes.get(y).setTurn_round_time(totaltime);
         processes.get(y).setBurset_time(0);
-        System.out.println("Process " + p1.getName() + "is terminated");
+        System.out.println("11-Process " + p1.getName() + "is terminated");
         totaltime+=context_switching;
 
         ArrayList<process> p2 = find_min_burset();
         for (int i=0;i<p2.size();i++) {
             if ( p2.get(i).getBurset_time() != 0 ) {
                 remain=p2.get(i).getBurset_time();
-                 y = processes.indexOf(p2.get(i));
+                for (int q=0;q<remain;q++)
+                    System.out.println("12-Process "+ p2.get(i).getName()+" is running");
+                y = processes.indexOf(p2.get(i));
                 processes.get(y).setBurset_time(0);
                 totaltime+=remain;
                 processes.get(y).setTurn_round_time(totaltime);
                 totaltime+=context_switching;
-                System.out.println("Process " + p2.get(i).getName() + "is terminated");
+                System.out.println("13-Process " + p2.get(i).getName() + "is terminated");
             }
         }
     }
     public double calculate_average_waiting() {
-        int av=0;
+        double av=0;
 
         for (int i = 0; i < processes.size(); i++) {
             av+=processes.get(i).getTurn_round_time()-processes.get(i).getArrive_time()-processes.get(i).getTemp_burset_time();
@@ -300,7 +291,7 @@ public class preemptive_SJF {
         return (av/processes.size());
     }
     public double calculate_average_turnround() {
-        int av=0;
+        double av=0;
 
         for (int i = 0; i < processes.size(); i++) {
             av+=processes.get(i).getTurn_round_time();

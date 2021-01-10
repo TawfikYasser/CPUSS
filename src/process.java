@@ -5,6 +5,7 @@ public class process {
     int waiting_time;
     int turn_round_time;
     int temp_time;
+    int queueNumber;
     
     //Priority Algorithm
     private int processID;
@@ -24,6 +25,12 @@ public class process {
         this.temp_time = burset_time;
     }
 
+    public process(String name, int burset_time, int arrive_time, int queueNumber) {
+        this.name = name;
+        this.burset_time = burset_time;
+        this.arrive_time = arrive_time;
+        this.queueNumber = queueNumber;
+    }
 
     public process(int processID, int priority, int arrivingTime, int burstTime) {
         this.processID = processID;
@@ -95,6 +102,14 @@ public class process {
 
     public int getArrive_time() {
         return arrive_time;
+    }
+
+    public int getQueueNumber() {
+        return queueNumber;
+    }
+
+    public void setQueueNumber(int queueNumber) {
+        this.queueNumber = queueNumber;
     }
 
     public void reduceTime(int time) {
